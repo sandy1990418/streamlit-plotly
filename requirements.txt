@@ -5,5 +5,3 @@ plotly
 dash
 twstock
 numpy
-threading
-webbrowser
