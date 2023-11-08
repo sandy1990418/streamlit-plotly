@@ -1,3 +1,9 @@
 altair
 pandas
 streamlit
+plotly
+dash
+twstock
+numpy
+threading
+webbrowser
