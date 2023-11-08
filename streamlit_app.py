@@ -8,8 +8,6 @@ from dash import Dash, html, dash_table, dcc, callback, Output, Input
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-import webbrowser
-from threading import Timer
 
 now = datetime.strftime(datetime.now(),'%Y%m%d')
 before = datetime.now() - timedelta(days=90)
