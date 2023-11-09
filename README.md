@@ -1,6 +1,8 @@
 # Dashboard using Streamlit!
 
 Using Streamlit and Plotly to create a Dashboard using to check the situation of Taiwan Stock.  
+
+
 Using this app should follow below steps:  
 Step1 : Click Sidebar   
 Step2 : Enter the ticker symbol (if you want to check the situation of multiple stocks, enter tickers with ',')  
