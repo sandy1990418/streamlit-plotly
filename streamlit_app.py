@@ -16,18 +16,35 @@ stockyear,stockmonth = int(before.year) ,int(before.month)
 st.set_page_config(layout="wide")
 st.title('Stock Visualiztion Dashboard :sunglasses:')
 
+
+if "visibility" not in st.session_state:
+    st.session_state.visibility = "visible"
+    st.session_state.disabled = False
+
 # Using "with" notation
 st.sidebar.write("""#### Choose your Stock""")
 with st.form(key ='Form1'):
     with st.sidebar:
-        input_stock = st.sidebar.text_input('Please enter the stock name',
-                                            label_visibility= 'hidden',
-                                            placeholder='輸入股票代碼')
-        stock_number = st.sidebar.number_input('Please enter the stock name',
-                                        value=1.382,
-                                        placeholder='倍率',
-                                        label_visibility= 'hidden')
-        submitted = st.form_submit_button(label = 'Search 🔎')
+        # input_stock = st.sidebar.text_input('Please enter the stock name',
+        #                                     label_visibility= 'hidden',
+        #                                     placeholder='輸入股票代碼')
+
+        input_stock = st.sidebar.text_input(
+                "Please enter the stock name 👇",
+                label_visibility=st.session_state.visibility,
+                disabled=st.session_state.disabled,
+                placeholder='股票代碼',
+        )
+        # stock_number = st.sidebar.number_input('Please enter the stock name',
+        #                                 value=1.382,
+        #                                 placeholder='倍率',
+        #                                 label_visibility= 'hidden')
+        stock_number = st.sidebar.number_input(
+                "Please enter the magnification 👇",
+                value=1.382,
+                placeholder='倍率',
+        )
+        submitted = st.form_submit_button(label = 'Search Money🔎')
 
 
 
@@ -127,7 +144,7 @@ def get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=sto
         t=80
         ))
     
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
     return None
 
 def main(input_stock,stock_number,stockyear,stockmonth,before):
