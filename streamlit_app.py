@@ -149,8 +149,10 @@ def get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=sto
 
 def main(input_stock,stock_number,stockyear,stockmonth,before):
     
+    input_stock = input_stock.split(',')
     if submitted:
-        get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=stockmonth,before=before)
+        for stock_name in input_stock:
+            get_history_stock_price(stock_name,stock_number,syear =stockyear,smonth=stockmonth,before=before)
         
     return None
 
