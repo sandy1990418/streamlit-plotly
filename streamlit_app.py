@@ -17,9 +17,9 @@ st.set_page_config(layout="wide")
 st.title('Stock Visualiztion Dashboard :sunglasses:')
 
 
-if "visibility" not in st.session_state:
-    st.session_state.visibility = "visible"
-    st.session_state.disabled = False
+# if "visibility" not in st.session_state:
+#     st.session_state.visibility = "visible"
+#     st.session_state.disabled = False
 
 # Using "with" notation
 st.sidebar.write("""#### Choose your Stock""")
@@ -31,8 +31,8 @@ with st.form(key ='Form1'):
 
         input_stock = st.sidebar.text_input(
                 "Please enter the stock name 👇",
-                label_visibility=st.session_state.visibility,
-                disabled=st.session_state.disabled,
+                # label_visibility=st.session_state.visibility,
+                # disabled=st.session_state.disabled,
                 placeholder='股票代碼',
         )
         # stock_number = st.sidebar.number_input('Please enter the stock name',
