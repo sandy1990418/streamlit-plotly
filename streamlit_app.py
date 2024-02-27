@@ -3,14 +3,16 @@ import numpy as np
 import twstock
 from datetime import datetime, timedelta
 import streamlit as st
-
+import pytz
 from dash import Dash, html, dash_table, dcc, callback, Output, Input
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-now = datetime.strftime(datetime.now(),'%Y%m%d')
-before = datetime.now() - timedelta(days=90)
+tw = pytz.timezone('Asia/Taipei')
+
+now = datetime.strftime(datetime.now().astimezone(tw),'%Y%m%d')
+before = datetime.now().astimezone(tw) - timedelta(days=90)
 stockyear,stockmonth = int(before.year) ,int(before.month)
 
 st.set_page_config(layout="wide")
@@ -65,7 +67,7 @@ def get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=sto
     stock_df['中關價'] = stock_df['中關價'].shift(periods=1)
     stock_df['低關價'] = stock_df['低關價'].shift(periods=1)
     
-    stock_df = stock_df[stock_df['date']>before]
+    stock_df = stock_df[stock_df['date']>datetime.strftime(before,'%Y-%m-%d')]
     stock_df['date'] =stock_df['date'].apply(lambda x :datetime.strftime(x,'%Y-%m-%d'))
     
 
@@ -91,7 +93,7 @@ def get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=sto
     
     fig.update_layout(xaxis = {'type' : 'category','tickangle':-90})
     
-    if datetime.now().weekday()<5 and datetime.now().hour<14:
+    if datetime.now().astimezone(tw).weekday()<5 and datetime.now().astimezone(tw).hour<14:
         temp = twstock.realtime.get(input_stock)
         real_time = pd.DataFrame({'date':datetime.strftime(datetime.now(),'%Y-%m-%d'),
                     'open':float(temp.get('realtime').get('open')),
@@ -104,7 +106,7 @@ def get_history_stock_price(input_stock,stock_number,syear =stockyear,smonth=sto
         stock_df['中關價'].iloc[-1]   =  np.around((stock_df['high'].iloc[-2] + stock_df['low'].iloc[-2])/2,2)
         stock_df['低關價'].iloc[-1]   = np.around(stock_df['high'].iloc[-2]-(stock_df['high'].iloc[-2] - stock_df['low'].iloc[-2])*stock_number,2)
     
-    elif datetime.now().hour>14 or datetime.now().weekday()>=5:
+    elif datetime.now().astimezone(tw).hour>14 or datetime.now().astimezone(tw).weekday()>=5:
         temp = twstock.realtime.get(input_stock)
         real_time = pd.DataFrame({'date':datetime.strftime(datetime.now()+timedelta(days=1, hours=3),'%Y-%m-%d'),
                     'open':0,
